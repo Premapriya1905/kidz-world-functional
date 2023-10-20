@@ -120,14 +120,29 @@ function updatePrice() {
   finalCents = totalPriceInCents % 100;
 }
 
+var whatsappLink =
+  "https://api.whatsapp.com/send?phone=919000000000&text=Order%20details";
+
+// WhatsApp intergration
+function updateWhatsappLink() {
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].quantity != 0) {
+      whatsappLink += "%0A" + items[index].name + "%20" + items[index].quantity;
+    }
+  }
+  whatsappLink +=
+    "%0A" + "Total%20Price:%20$" + finalDollars + "%20" + finalCents + "c";
+}
+
 
 cartButton.onclick = () => {
   updatePrice();
+  updateWhatsappLink()
+  window.open(whatsappLink,'blank')
 
-
-  for (let index = 0; index < items.length; index++) {
-    if (items[index].quantity != 0) {
-      console.log(
+for (let index = 0; index < items.length; index++) {
+  if (items[index].quantity != 0) {
+    console.log(
         "Item name: " +
           items[index].name +
           " - Quantity: " +
